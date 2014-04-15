@@ -15,7 +15,7 @@ struct VertexPosition
 	DirectX::XMFLOAT3 color;
 };
 
-// This class no longer renders a simple spinning Line.
+// This class no longer renders a simple spinning Cube.
 ref class LineRenderer sealed : public Direct3DBase
 {
 public:
@@ -32,7 +32,6 @@ public:
 	void appendToArray( float sample );
 	void setColor( float r, float g, float b );
 	void setYLim( float yMin, float yMax );
-	//void Update( float totalTime, float timeDelta );
 
 private:
 	void updateVertexBuffer();
