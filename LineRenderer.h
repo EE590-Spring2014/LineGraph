@@ -27,8 +27,10 @@ public:
     virtual void CreateWindowSizeDependentResources() override;
     virtual void Render() override;
  
+internal:
     // Method for updating time-dependent objects.
     void setArray( float * data, unsigned int N );
+	void getArray( VertexPosition ** userVerts, unsigned int * userN );
 	void appendToArray( float sample );
 	void setColor( float r, float g, float b );
 	void setYLim( float yMin, float yMax );

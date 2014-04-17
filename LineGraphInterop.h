@@ -32,19 +32,22 @@ namespace LineGraph
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////////
-		// EE 596:
+		// EE 590:
 		// These are the methods you will be using!  Everything else in this class is necessary, but boilerplate
 
 		// Overwrites the entire array you're plotting, use with audio where the entire buffer changes every frame
 		void setArray( const Platform::Array<float>^ buff );
 
-		// Appends to the internal array (of size what was last set, default 480 samples)
+		// Appends to the internal array (of size what was last set, default 480 samples, you can change via setArray)
 		void appendToArray( float sample );
+
+		// Returns the internal array as a Platform::Array<float>^
+		Platform::Array<float>^ getArray();
 
 		// Sets the color of the line
 		void setColor( float r, float g, float b );
 
-		// Set the y limits of the plot
+		// Set the y limits of the plot (defaults to -1, 1)
 		void setYLimits( float yMin, float yMax );
 		////////////////////////////////////////////////////////////////////////////////////////////////////////
 	protected:

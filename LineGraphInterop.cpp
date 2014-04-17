@@ -95,6 +95,21 @@ void LineGraphInterop::setArray( const Platform::Array<float>^ data ) {
 	RequestAdditionalFrame();
 }
 
+Platform::Array<float>^ LineGraphInterop::getArray() {
+	if( m_renderer ) {
+		VertexPosition * verts;
+		unsigned int N;
+		m_renderer->getArray( &verts, &N);
+
+		Platform::Array<float>^ data = ref new Platform::Array<float>(N);
+		for( unsigned int i=0; i<N; ++i ) {
+			data->Data[i] = verts[i].pos.y;
+		}
+		return data;
+	}
+	return nullptr;
+}
+
 void LineGraphInterop::appendToArray( float sample ) {
 	if( m_renderer ) {
 		m_renderer->appendToArray( sample );

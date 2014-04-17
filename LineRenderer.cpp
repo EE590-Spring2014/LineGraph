@@ -138,6 +138,12 @@ void LineRenderer::setArray(float * data, unsigned int N) {
 	this->vbDirty = true;
 }
 
+void LineRenderer::getArray( VertexPosition ** userVerts, unsigned int * userN ) {
+	*userVerts = this->lineVerts;
+	*userN = this->N;
+}
+
+
 void LineRenderer::updateVertexBuffer() {
 	if( vbDirty ) {
 		if( vbSizeDirty ) {
