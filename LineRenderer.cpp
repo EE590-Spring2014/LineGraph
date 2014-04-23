@@ -15,6 +15,7 @@ LineRenderer::LineRenderer() {
 	yMin = -1.0f;
 	yMax = 1.0f;
 	color = XMFLOAT3( 1.0f, 1.0f, 1.0f );
+	buffer_lock = CreateMutexEx( NULL, FALSE, NULL, MUTEX_ALL_ACCESS );
 }
 
 LineRenderer::~LineRenderer() {
@@ -83,6 +84,14 @@ void LineRenderer::CreateDeviceResources() {
 	memset( data, 0, sizeof(float)*480 );
 	this->setArray( data, 480 );
 }
+
+void LineRenderer::lockBuffers() {
+	WaitForSingleObjectEx( buffer_lock, INFINITE, false );
+}
+
+void LineRenderer::unlockBuffers() {
+	ReleaseMutex( buffer_lock );
+}
  
 void LineRenderer::CreateWindowSizeDependentResources() {
     Direct3DBase::CreateWindowSizeDependentResources();
@@ -101,13 +110,16 @@ void LineRenderer::makeConstantBuffers() {
 }
 
 void LineRenderer::setYLim( float yMin, float yMax ) {
+	lockBuffers();
 	this->yMin = yMin;
 	this->yMax = yMax;
 	this->makeConstantBuffers();
+	unlockBuffers();
 }
 
 void LineRenderer::setArray(float * data, unsigned int N) {
 	// Recreate lineVerts, if need be
+	lockBuffers();
 	if( N != this->N ) {
 		if( this->lineVerts )
 			delete[] this->lineVerts;
@@ -136,6 +148,7 @@ void LineRenderer::setArray(float * data, unsigned int N) {
 
 	this->N = N;
 	this->vbDirty = true;
+	unlockBuffers();
 }
 
 void LineRenderer::getArray( VertexPosition ** userVerts, unsigned int * userN ) {
@@ -208,6 +221,7 @@ void LineRenderer::Render()
 		return;
 	}
 
+	lockBuffers();
 	if( constantBufferDirty ) {
 		// Throw the constant matrices up onto the GPU only if we need to
 		m_d3dContext->UpdateSubresource( m_constantBuffer.Get(), 0, NULL, &m_constantBufferData, 0, 0 );
@@ -255,4 +269,5 @@ void LineRenderer::Render()
 		);
 
 	m_d3dContext->Draw( this->N, 0 );
+	unlockBuffers();
 }

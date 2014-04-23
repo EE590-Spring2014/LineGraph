@@ -52,4 +52,9 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11Buffer> m_vertexBuffer;
 	Microsoft::WRL::ComPtr<ID3D11Buffer> m_constantBuffer;
 	ModelViewProjectionConstantBuffer m_constantBufferData;
+
+	// Whoops, we need a lock on the buffers when we're drawing!
+	HANDLE buffer_lock;
+	void lockBuffers();
+	void unlockBuffers();
 };
