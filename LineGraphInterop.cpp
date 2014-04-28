@@ -73,6 +73,9 @@ HRESULT LineGraphInterop::Connect(_In_ IDrawingSurfaceRuntimeHostNative* host)
 	m_renderer->UpdateForWindowSizeChange(WindowBounds.Width, WindowBounds.Height);
 	m_renderer->UpdateForRenderResolutionChange(m_renderResolution.Width, m_renderResolution.Height);
 
+	// Fire off Initialized event
+	Initialized();
+
 	return S_OK;
 }
 

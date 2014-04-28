@@ -9,6 +9,7 @@ namespace LineGraph
 {
 	public delegate void RequestAdditionalFrameHandler();
 	public delegate void RecreateSynchronizedTextureHandler();
+	public delegate void LineGraphReady();
 
 	[Windows::Foundation::Metadata::WebHostHidden]
 	public ref class LineGraphInterop sealed : public Windows::Phone::Input::Interop::IDrawingSurfaceManipulationHandler
@@ -22,6 +23,7 @@ namespace LineGraph
 
 		event RequestAdditionalFrameHandler^ RequestAdditionalFrame;
 		event RecreateSynchronizedTextureHandler^ RecreateSynchronizedTexture;
+		event LineGraphReady^ Initialized;
 
 		property Windows::Foundation::Size WindowBounds;
 		property Windows::Foundation::Size NativeResolution;
